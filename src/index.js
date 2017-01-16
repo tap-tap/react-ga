@@ -24,13 +24,8 @@ var _format = function (s) {
 };
 
 var ReactGA = {
-  initialize: function (gaTrackingID, options) {
-    if (!gaTrackingID) {
-      warn('gaTrackingID is required in initialize()');
-      return;
-    }
-
-    if (options) {
+  options: function (options) {
+    if (typeof options === 'object') {
       if (options.debug && options.debug === true) {
         _debug = true;
       }
@@ -38,6 +33,22 @@ var ReactGA = {
       if (options.titleCase === false) {
         _titleCase = false;
       }
+    } else {
+      return {
+        debug: _debug,
+        titleCase: _titleCase,
+      }
+    }
+  },
+
+  initialize: function (gaTrackingID, options) {
+    if (!gaTrackingID) {
+      warn('gaTrackingID is required in initialize()');
+      return;
+    }
+
+    if (typeof options === 'object') {
+      this.options(options);
     }
 
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/

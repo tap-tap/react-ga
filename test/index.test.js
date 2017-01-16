@@ -43,6 +43,17 @@ describe('react-ga', function () {
     });
   });
 
+  describe('options()', function() {
+    it('should return default options', function () {
+      ReactGA.options().should.eql({ debug: false, titleCase: true });
+    });
+
+    it('should set options', function () {
+      ReactGA.options({ debug: true });
+      ReactGA.options().should.eql({ debug: true, titleCase: true });
+    });
+  });
+
   describe('initialize()', function () {
     it('should define window.ga', function () {
       ReactGA.initialize('foo');
